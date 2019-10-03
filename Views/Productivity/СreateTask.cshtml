@@ -1,0 +1,39 @@
+﻿@model TaskP
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+    <link href="~/css/register-page.css" rel="stylesheet" type="text/css" />
+}
+
+<form asp-controller="Productivity" asp-action="СreateTask" method="post">
+    <h2>Create task</h2>
+    <div>
+        <p>
+            <label for="Name" class="floatLabel">Name</label><br />
+            <input id="Name" name="Name" type="text" />
+            <span asp-validation-for="Name" id="mySpan">Write down the name of your task</span>
+        </p>
+    </div>
+    <div>
+        <p>
+            <label for="EndDate" class="floatLabel">EndDate</label><br />
+            <input id="EndDate" name="EndDate" type="date" class="EndDate" />
+        </p>
+    </div>
+    <div >
+        <p>
+            <label for="Priority" class="floatLabel">Priority</label><br />
+            <select name="Priority" for="Priority" class="custom-select">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="Height">Height</option>
+            </select>
+        </p>
+    </div>
+    <div>
+        <p>
+            <input type="submit" value="Create Task" id="submit" />
+        </p>
+    </div>
+</form>

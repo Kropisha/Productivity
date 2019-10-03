@@ -1,0 +1,46 @@
+﻿@using System.Web.Optimization
+@model NetProductivity.Models.RegisterModel
+@{
+    <link href="~/css/register-page.css" rel="stylesheet" type="text/css" />
+    //<script type="text/javascript" src="/js/register.js"></script>
+}
+<head>
+    <script src="~/js/register.js" type="text/javascript" ></script>
+</head>
+<form asp-controller="Register" asp-action="Register" method="post">
+    <h2>Sign Up</h2>
+    <div>
+        <p>
+            <label for="UserName" class="floatLabel">UserName</label><br/>
+            <input id="UserName" name="UserName" type="text"/>
+            @*<span asp-validation-for="UserUserName"></span>*@
+        </p>
+    </div>
+    <div>
+        <p>
+            <label for="Email" class="floatLabel">Email</label>
+            <input id="Email" name="Email" type="text">
+            <span>Required field</span>
+        </p>
+    </div>
+    <div>
+        <p>
+            <label for="Password" class="floatLabel">Password</label>
+            <input id="Password" name="Password" type="password">
+            <span>Enter a password longer than 6 characters and contains lower case, upper case, digits and special symbols</span>
+        </p>
+    </div>
+    <div>
+        <p>
+            <label for="PasswordConfirm" class="floatLabel">Confirm Password</label>
+            <input id="PasswordConfirm" name="PasswordConfirm" type="password">
+            <span>Your passwords do not match</span>
+        </p>
+    </div>
+    <div>
+        <p>
+            <script type="text/javascript" src="/js/register.js"></script>
+            <input type="submit" value="Create My Account" id="submit" />
+        </p>
+    </div>
+</form>

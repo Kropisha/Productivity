@@ -1,0 +1,527 @@
+﻿body {
+    background-color: #FFF;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+}
+
+    html *, body * {
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+main {
+    width: 90%;
+    margin: 30px auto;
+    background-color: #665252;
+    position: relative;
+    z-index: 0;
+}
+
+    main header {
+        text-align: justify;
+        color: #FFF;
+        line-height: 0;
+        padding: 10px 5%;
+        position: relative;
+    }
+
+        main header span, main header h3, main header .task-indicators {
+            display: inline-block;
+            width: auto;
+            line-height: 1.5;
+        }
+
+        main header h3 {
+            -webkit-transform: translateX(-50%);
+            -moz-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            -o-transform: translateX(-50%);
+            transform: translateX(-50%);
+            position: absolute;
+            left: 50%;
+            font-weight: 400;
+        }
+
+        main header .task-indicators {
+            font-size: 12px;
+        }
+
+            main header .task-indicators span {
+                padding: 0 8px;
+                border-radius: 2px;
+                border: 1px solid currentColor;
+                display: inline-block;
+                margin-left: 5px;
+            }
+
+                main header .task-indicators span:nth-child(1) {
+                    color: #FFE4C4;
+                }
+
+                main header .task-indicators span:nth-child(2) {
+                    color: #ac9e9e;
+                }
+
+                    main header .task-indicators span:nth-child(2) i[class*="fa-"] {
+                        padding-right: 3px;
+                    }
+
+        main header:after {
+            content: '';
+            display: inline-block;
+            width: 100%;
+        }
+
+header {
+    background-color: #665252;
+}
+
+mark {
+    background-color: transparent;
+}
+
+h2 {
+    font-size: 21px;
+}
+
+.checkbox {
+    text-align: justify;
+    direction: rtl;
+    position: relative;
+    line-height: 0;
+}
+
+    .checkbox:after {
+        content: '';
+        width: 100%;
+        display: inline-block;
+    }
+
+    .checkbox input, .checkbox .label, .checkbox .check {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .checkbox .label {
+        max-width: 200px;
+    }
+
+    .checkbox .check {
+        position: relative;
+    }
+
+    .checkbox input[type="checkbox"] {
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        cursor: pointer;
+    }
+
+        .checkbox input[type="checkbox"]:focus {
+            outline: 0;
+        }
+
+        .checkbox input[type="checkbox"]:checked + .ripple-container .check-off {
+            border-color: #FFF;
+        }
+
+        .checkbox input[type="checkbox"]:checked + .ripple-container .check-on {
+            -webkit-transform: scale(0.8);
+            -moz-transform: scale(0.8);
+            -ms-transform: scale(0.8);
+            -o-transform: scale(0.8);
+            transform: scale(0.8);
+            -webkit-transition: -webkit-transform 0.3s;
+            -moz-transition: -moz-transform 0.3s;
+            transition: transform 0.3s;
+            color: #FFF;
+        }
+
+        .checkbox input[type="checkbox"]:checked + .ripple-container .check-ripple:before, .checkbox input[type="checkbox"]:checked + .ripple-container .check-ripple:after {
+            -webkit-transition: all 0.65s cubic-bezier(0.25, 0.8, 0.25, 1);
+            -moz-transition: all 0.65s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.65s cubic-bezier(0.25, 0.8, 0.25, 1);
+            opacity: 0;
+        }
+
+        .checkbox input[type="checkbox"]:checked + .ripple-container .check-ripple:before {
+            -webkit-transform: scale(3);
+            -moz-transform: scale(3);
+            -ms-transform: scale(3);
+            -o-transform: scale(3);
+            transform: scale(3);
+        }
+
+        .checkbox input[type="checkbox"]:checked + .ripple-container .check-ripple:after {
+            -webkit-transform: scale(1.5);
+            -moz-transform: scale(1.5);
+            -ms-transform: scale(1.5);
+            -o-transform: scale(1.5);
+            transform: scale(1.5);
+        }
+
+        .checkbox input[type="checkbox"] + .ripple-container {
+            width: auto;
+            position: relative;
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            top: 2px;
+            pointer-events: none;
+        }
+
+            .checkbox input[type="checkbox"] + .ripple-container:before {
+                content: '';
+                position: absolute;
+                border-radius: 2px;
+                display: block;
+                height: auto;
+                left: 0;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                -webkit-transition: all 0.5s;
+                -moz-transition: all 0.5s;
+                transition: all 0.5s;
+            }
+
+            .checkbox input[type="checkbox"] + .ripple-container .check-off {
+                position: absolute;
+                width: 25px;
+                height: 25px;
+                left: 0;
+                top: 0;
+                border-radius: 2px;
+                border: 2px solid #fa9e9a;
+                transition: border-color ease 0.28s;
+            }
+
+            .checkbox input[type="checkbox"] + .ripple-container .check-on {
+                -webkit-transform: scale(0);
+                -moz-transform: scale(0);
+                -ms-transform: scale(0);
+                -o-transform: scale(0);
+                transform: scale(0);
+                -webkit-transition: all 0s;
+                -moz-transition: all 0s;
+                transition: all 0s;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+                line-height: 25px;
+            }
+
+            .checkbox input[type="checkbox"] + .ripple-container .check-ripple:before, .checkbox input[type="checkbox"] + .ripple-container .check-ripple:after {
+                -webkit-transition: all 0s;
+                -moz-transition: all 0s;
+                transition: all 0s;
+                -webkit-transform: scale(0);
+                -moz-transform: scale(0);
+                -ms-transform: scale(0);
+                -o-transform: scale(0);
+                transform: scale(0);
+                content: '';
+                position: absolute;
+                display: block;
+                border-radius: 50%;
+                width: 25px;
+                height: 25px;
+                opacity: 1;
+            }
+
+            .checkbox input[type="checkbox"] + .ripple-container .check-ripple:before {
+                background-color: rgba(255, 255, 255, 0.35);
+            }
+
+            .checkbox input[type="checkbox"] + .ripple-container .check-ripple:after {
+                background-color: rgba(219, 213, 213, 0.6);
+            }
+
+.task-list {
+    position: relative;
+    color: #FFF;
+    padding: 15px 25px;
+}
+
+    .task-list mark {
+        color: #FFF;
+        display: inline-block;
+        margin-bottom: 3px;
+    }
+
+    .task-list time {
+        font-weight: 300;
+        font-size: 12px;
+    }
+
+    .task-list h2 {
+        margin: 10px 0;
+        font-weight: 700;
+    }
+
+    .task-list h3 {
+        margin: 0 0 10px;
+        text-align: center;
+        text-transform: uppercase;
+        color: #989ba2;
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+    .task-list ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        z-index: 1;
+    }
+
+        .task-list ul li {
+            -webkit-transition: all 0.2s ease-out;
+            -moz-transition: all 0.2s ease-out;
+            transition: all 0.2s ease-out;
+            padding: 15px 0;
+            position: relative;
+            /* CHECKED STYLE */
+        }
+
+            .task-list ul li .label {
+                -webkit-transition: all 0.2s ease-out;
+                -moz-transition: all 0.2s ease-out;
+                transition: all 0.2s ease-out;
+                margin-bottom: 2px;
+                line-height: 1.2;
+                direction: ltr;
+                text-align: left;
+                opacity: 1;
+            }
+
+            .task-list ul li .task-msg {
+                -webkit-transform: translate3d(0, -50%, 0);
+                -moz-transform: translate3d(0, -50%, 0);
+                -ms-transform: translate3d(0, -50%, 0);
+                -o-transform: translate3d(0, -50%, 0);
+                transform: translate3d(0, -50%, 0);
+                right: 40px;
+                top: 47%;
+                position: absolute;
+                text-transform: uppercase;
+                font-size: 12px;
+                opacity: 0;
+            }
+
+            .task-list ul li.task-checked .task-msg {
+                -webkit-animation: fadeInOut 2s;
+                -moz-animation: fadeInOut 2s;
+                animation: fadeInOut 2s;
+            }
+
+            .task-list ul li.task-checked .label {
+                opacity: 0.5;
+            }
+
+    .task-list.current {
+        background-color: #87CEFA;
+        background-image: -webkit-linear-gradient(-315deg, #87CEFA 0%, #f75851 100%);
+        background-image: linear-gradient(45deg,#87CEFA 0%, #f75851 100%);
+        z-index: 1;
+    }
+
+        .task-list.current ul li {
+            border-top: 1px solid #f86f69;
+        }
+
+        .task-list.current:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            z-index: 0;
+            background-image: url("https://snap-photos.s3.amazonaws.com/img-thumbs/960w/XNZTUL720T.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+    .task-list.notcurrent {
+        color: white;
+        background-image: linear-gradient(45deg,#262626 0%, #666666 100%);
+    }
+
+        .task-list.notcurrent ul li {
+            border-top: 1px solid #34363a;
+        }
+
+        .task-list.notcurrent ul, .task-list.notcurrent mark {
+            color: #71757d;
+        }
+
+        .task-list.notcurrent .checkbox input[type="checkbox"] + .ripple-container .check-off {
+            border: 2px solid #FFF;
+        }
+
+@-webkit-keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(10px, -50%, 0);
+    }
+
+    30% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, -50%, 0);
+    }
+
+    75% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, -50%, 0);
+    }
+
+    100% {
+        opacity: 0;
+        -webkit-transform: translate3d(-10px, -50%, 0);
+    }
+}
+
+@-moz-keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        -moz-transform: translate3d(10px, -50%, 0);
+    }
+
+    30% {
+        opacity: 1;
+        -moz-transform: translate3d(0, -50%, 0);
+    }
+
+    75% {
+        opacity: 1;
+        -moz-transform: translate3d(0, -50%, 0);
+    }
+
+    100% {
+        opacity: 0;
+        -moz-transform: translate3d(-10px, -50%, 0);
+    }
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(10px, -50%, 0);
+        -moz-transform: translate3d(10px, -50%, 0);
+        -ms-transform: translate3d(10px, -50%, 0);
+        -o-transform: translate3d(10px, -50%, 0);
+        transform: translate3d(10px, -50%, 0);
+    }
+
+    30% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, -50%, 0);
+        -moz-transform: translate3d(0, -50%, 0);
+        -ms-transform: translate3d(0, -50%, 0);
+        -o-transform: translate3d(0, -50%, 0);
+        transform: translate3d(0, -50%, 0);
+    }
+
+    75% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, -50%, 0);
+        -moz-transform: translate3d(0, -50%, 0);
+        -ms-transform: translate3d(0, -50%, 0);
+        -o-transform: translate3d(0, -50%, 0);
+        transform: translate3d(0, -50%, 0);
+    }
+
+    100% {
+        opacity: 0;
+        -webkit-transform: translate3d(-10px, -50%, 0);
+        -moz-transform: translate3d(-10px, -50%, 0);
+        -ms-transform: translate3d(-10px, -50%, 0);
+        -o-transform: translate3d(-10px, -50%, 0);
+        transform: translate3d(-10px, -50%, 0);
+    }
+}
+
+.content, .wrapper:before {
+    box-sizing: border-box;
+    display: block;
+    font-size: 4em;
+    padding: 1em;
+    width: 8em;
+    height: 6em;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate3d(-50%, -50%, 0);
+    transform: translate3d(-50%, -50%, 0);
+}
+
+.content {
+    font-weight: bold;
+    text-align: center;
+    z-index: 1000;
+    background: #fff;
+    color: #000;
+    mix-blend-mode: lighten;
+}
+
+section {
+    background-repeat: no-repeat;
+    background-size: cover;
+    isolation: isolate;
+    position: relative;
+    height: 50vh;
+    padding: 1em;
+}
+
+.wrapper {
+    clip: rect(auto auto auto auto);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.wrapper:before {
+    content: " ";
+    padding: 2em 3.5em;
+    mix-blend-mode: darken;
+}
+
+.one {
+    background-image: url(https://source.unsplash.com/1920x1080?nature);
+}
+.one .wrapper:before {
+    background: red;
+}
+
+.two {
+    background-image: url(https://source.unsplash.com/1920x1080?landscape);
+}
+.two .wrapper:before {
+    background: #faaa54;
+    mix-blend-mode: difference;
+}
+
+.three {
+    background-image: url(https://source.unsplash.com/1920x1080?portrait);
+}
+.three .wrapper:before {
+    background: #6c320a;
+    mix-blend-mode: screen;
+}
+
+.four {
+    background-image: url(https://source.unsplash.com/1920x1080?stars);
+}
+.four .wrapper:before {
+    background: #e4135d;
+}

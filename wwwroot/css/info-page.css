@@ -1,0 +1,65 @@
+﻿.info-page {
+    position: relative;
+    flex-grow: 1;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    
+}
+    /*.info-page:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: ‎ #FFFFFF;
+        background-image: url("~/Images/blue-abstract-acrylic-brush-stroke-textured-background_53876-86373.jpg");
+        background-repeat: no-repeat;
+        background-position: center 390px;
+        background-attachment: fixed;
+    }*/
+
+.info-page__title {
+    margin-bottom: 16px;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: -0.2px;
+    line-height: 32px;
+}
+li:last-child {
+    float: right;
+}
+.info-page__subtitle {
+    margin-bottom: 32px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 26px;
+}
+
+.info-page__descr {
+    margin-bottom: 32px;
+    font-size: 16px;
+    line-height: 24px;
+}
+.info-page__img {
+    position: sticky;
+    top: 100px;
+    transform: translateX(30px);
+}
+.container {
+    /*padding-top: 20px;*/
+    
+}
+.main-btn {
+    font-size: 20px;
+    border-radius: 8px;
+    transition-duration: 0.4s;
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+}
+.main-btn:hover {
+    background-color: #008CBA; /* Blue */
+    color: white;
+}
+

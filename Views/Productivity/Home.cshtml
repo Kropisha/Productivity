@@ -1,0 +1,35 @@
+﻿@{
+    //ViewData["Title"] = "Home Page";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    <link href="~/css/info-page.css" rel="stylesheet" type="text/css" />
+}
+<div class="info-page">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h1 class="info-page__title">My productivity</h1>
+                <h2 class="info-page__subtitle">
+                    Productivity is how much output your team can generate within the resources you have available. The more you can produce with the resources available, the greater the value your team generates.
+                </h2>
+                <div class="info-page__descr">
+                    <p><h2><strong>How To Be More Productive</strong></h2></p>
+                    <p><strong>Make a reasonable to-do list:</strong> Your to-do list becomes a procrastination tool? Yes, that’s happens. Because first you do the easy stuff, and then become really distracted on the hard stuff.</p>
+                    <p><strong>Set small goals for the tasks:</strong> With every new project or assignment, the scope may seem too large. But once you start breaking it down and realizing what can be accomplished, you’ll notice how each part builds upon the other.</p>
+                    <p><strong>Focus on one goal at a time:</strong> You can set up projects to focus on your dream but make sure that it aligns with your overall project goals</p>
+                    <p><strong>Create a proactive dashboard:</strong>  I can help with this, just use my app!</p>
+                    <p><cite>Until we can manage time, we can manage nothing else.</cite></p>
+                </div>
+                <button type='button' class="main-btn" onclick="redirectOnClick()" formaction="/Register/Login">Get Started</button>
+                <script>
+                    function redirectOnClick(){
+                        document.location ='Register/Login';
+                    }
+                </script>
+            </div>
+            <div class="image">
+                <img src ="Images/productivity.png" alt="Productivity picture" width="500px"/>
+            </div>
+        </div>
+    </div>
+</div>
