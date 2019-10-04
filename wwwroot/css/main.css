@@ -1,7 +1,6 @@
 ﻿body {
     background-color: #FFF;
     font-family: "Open Sans", sans-serif;
-    font-size: 14px;
 }
 
     html *, body * {
@@ -524,4 +523,22 @@ section {
 }
 .four .wrapper:before {
     background: #e4135d;
+}
+span {
+    font-size: 2em;
+}
+.button1 {
+    margin-right: 10px;
+}
+.button2 {
+    margin-right: 30px;
+}
+td {
+    width: 200px;
+    border: solid 1px green;
+    height: 100%}
+td a {
+    display: inline-block;
+    height:100%;
+    width:100%;
 }

@@ -24,95 +24,106 @@
         <section class="task-list current">
             @foreach (var task in Model)
             {
-
-                <h2>@task.Key</h2>
-                <span >Add</span>
+            <tr>
+                <th>
+                <td>
+                    <span>@task.Key</span>
+                </td>
+                <td id="button1">
+                    <a class="btn btn-default btn-outline-dark" asp-controller="Productivity" asp-action="UpdateProject" formaction="Productivity/UpdateProject">Edit</a>
+                </td>
+                <td id="button2">
+                    <a class="btn btn-default btn-outline-dark" asp-controller="Productivity" asp-action="DeleteProject" asp-route-name="@task.Key">Delete</a>
+                </td>
+                </th>
                 <ul>
                     @if (task.Value.Count != 0)
                     {
                         foreach (var proj in task.Value)
-                         {
-                             <li>
+                        {
+                            <li>
 
-                                 <div class="checkbox">
-                                     <div class="check">
-                                         <input type="checkbox" name="task_00">
-                                         <div class="ripple-container">
-                                             <div class="check-off"></div>
-                                             <div class="check-on"><i class="fa fa-check"></i></div>
-                                             <div class="check-ripple"></div>
-                                         </div>
-                                     </div>
-                                     <div class="label">
-                                         <mark>@proj.Name</mark>
-                                         <br>
-                                         <time datetime="05-12-2016">@proj.EndDate</time>
-                                     </div>
-                                 </div>
-                                 <span class="task-msg">Well done!</span>
-                             </li>
-                         }
+                                <div class="checkbox">
+                                    <div class="check">
+                                        <input type="checkbox" name="task_00">
+                                        <div class="ripple-container">
+                                            <div class="check-off"></div>
+                                            <div class="check-on"><i class="fa fa-check"></i></div>
+                                            <div class="check-ripple"></div>
+                                        </div>
+                                    </div>
+                                    <div class="label">
+                                        <mark>@proj.Name</mark>
+                                        <br>
+                                        <time datetime="05-12-2016">@proj.EndDate</time>
+                                    </div>
+                                </div>
+                                <span class="task-msg">Well done!</span>
+                            </li>
+                        }
                     }
                     else
                     {
                         ProductivityController.CurrentProj = task.Key;
-                     <div class="content2">NO TASKS? <a asp-controller="Productivity" asp-action="СreateTask" >CREATE ONE</a></div>
+                        <div class="content2">NO TASKS? <a asp-controller="Productivity" asp-action="СreateTask">CREATE ONE</a></div>
                     }
+
                     @*<li>
-                        <div class="checkbox">
-                            <div class="check">
-                                <input type="checkbox" name="task_00">
-                                <div class="ripple-container">
-                                    <div class="check-off"></div>
-                                    <div class="check-on"><i class="fa fa-check"></i></div>
-                                    <div class="check-ripple"></div>
-                                </div>
-                            </div>
-                            <div class="label">
-                                <mark>Cool task</mark>
-                                <br>
-                                <time datetime="05-12-2016">12 March 2016 - h 9:30 am</time>
-                            </div>
+                <div class="checkbox">
+                    <div class="check">
+                        <input type="checkbox" name="task_00">
+                        <div class="ripple-container">
+                            <div class="check-off"></div>
+                            <div class="check-on"><i class="fa fa-check"></i></div>
+                            <div class="check-ripple"></div>
                         </div>
-                        <span class="task-msg">Well done!</span>
-                    </li>
-                    <li>
-                        <div class="checkbox">
-                            <div class="check">
-                                <input type="checkbox" name="task_01">
-                                <div class="ripple-container">
-                                    <div class="check-off"></div>
-                                    <div class="check-on"><i class="fa fa-check"></i></div>
-                                    <div class="check-ripple"></div>
-                                </div>
-                            </div>
-                            <div class="label">
-                                <mark>Another task which takes more than one line</mark>
-                                <br>
-                                <time datetime="05-12-2016">12 March 2016</time>
-                            </div>
+                    </div>
+                    <div class="label">
+                        <mark>Cool task</mark>
+                        <br>
+                        <time datetime="05-12-2016">12 March 2016 - h 9:30 am</time>
+                    </div>
+                </div>
+                <span class="task-msg">Well done!</span>
+            </li>
+            <li>
+                <div class="checkbox">
+                    <div class="check">
+                        <input type="checkbox" name="task_01">
+                        <div class="ripple-container">
+                            <div class="check-off"></div>
+                            <div class="check-on"><i class="fa fa-check"></i></div>
+                            <div class="check-ripple"></div>
                         </div>
-                        <span class="task-msg">Well done!</span>
-                    </li>
-                    <li>
-                        <div class="checkbox">
-                            <div class="check">
-                                <input type="checkbox" name="task_02">
-                                <div class="ripple-container">
-                                    <div class="check-off"></div>
-                                    <div class="check-on"><i class="fa fa-check"></i></div>
-                                    <div class="check-ripple"></div>
-                                </div>
-                            </div>
-                            <div class="label">
-                                <mark>Cool task</mark>
-                                <br>
-                                <time datetime="05-12-2016">12 March 2016</time>
-                            </div>
+                    </div>
+                    <div class="label">
+                        <mark>Another task which takes more than one line</mark>
+                        <br>
+                        <time datetime="05-12-2016">12 March 2016</time>
+                    </div>
+                </div>
+                <span class="task-msg">Well done!</span>
+            </li>
+            <li>
+                <div class="checkbox">
+                    <div class="check">
+                        <input type="checkbox" name="task_02">
+                        <div class="ripple-container">
+                            <div class="check-off"></div>
+                            <div class="check-on"><i class="fa fa-check"></i></div>
+                            <div class="check-ripple"></div>
                         </div>
-                        <span class="task-msg">Well done!</span>
-                    </li>*@
+                    </div>
+                    <div class="label">
+                        <mark>Cool task</mark>
+                        <br>
+                        <time datetime="05-12-2016">12 March 2016</time>
+                    </div>
+                </div>
+                <span class="task-msg">Well done!</span>
+            </li>*@
                 </ul>
+            </tr>
             }
         </section>
 

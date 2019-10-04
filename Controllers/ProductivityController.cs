@@ -59,7 +59,7 @@ namespace NetProductivity.Controllers
                     Status = Status.New.ToString()
                 });
             db.SaveChanges();
-            return Ok(project);
+            return RedirectToAction("Main", "Productivity");
         }
 
         [HttpGet]
@@ -104,7 +104,69 @@ namespace NetProductivity.Controllers
             task.Status = Status.New.ToString();
             db.Tasks.Add(task);
             db.SaveChanges();
-            return Ok(task);
+            return RedirectToAction("Main", "Productivity");
+        }
+
+        [HttpGet]
+        public IActionResult UpdateProject()
+        {
+            return View();
+        }
+
+        [HttpPut]
+        public IActionResult UpdateProject(Project project)
+        {
+            var current = db.Projects.FirstOrDefault(p => p.Id == project.Id);
+            current.Name = project.Name;
+            db.Projects.Update(current);
+            db.SaveChanges();
+            return RedirectToAction("Main", "Productivity");
+        }
+
+        [HttpGet]
+        public IActionResult UpdateTask()
+        {
+            return View("СreateTask");
+        }
+
+        [HttpPut]
+        public IActionResult UpdateTask(TaskP task)
+        {
+            var current = db.Tasks.FirstOrDefault(p => p.Id == task.Id);
+            current.Name = task.Name;
+            current.EndDate = task.EndDate;
+            current.Priority = task.Priority;
+            db.Tasks.Update(current);
+            db.SaveChanges();
+            return RedirectToAction("Main", "Productivity");
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteTask(Guid id)
+        {
+            var current = db.Tasks.FirstOrDefault(t => t.Id == id);
+            db.Tasks.Remove(current);
+            db.SaveChanges();
+            return RedirectToAction("Main", "Productivity");
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteProject(string name)
+        {
+            var current = db.Projects.FirstOrDefault(t => t.Name == name);
+            db.Projects.Remove(current);
+            foreach (var task in db.Tasks)
+            {
+                if (task.ProjectId == current.Id)
+                {
+                    db.Tasks.Remove(task);
+                }
+            }
+
+            var proj = db.UserProjects.FirstOrDefault(p => p.ProjectId == current.Id);
+            db.UserProjects.Remove(proj);
+            db.SaveChanges();
+            return RedirectToAction("Main", "Productivity");
         }
 
         [HttpGet]
