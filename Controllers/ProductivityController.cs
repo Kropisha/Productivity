@@ -40,6 +40,7 @@ namespace NetProductivity.Controllers
         }
 
         public static string CurrentProj { get; set; }
+        public static Guid CurrentTaskId { get; set; }
 
         [HttpPost]
         public IActionResult СreateProject(Project project)
@@ -132,7 +133,7 @@ namespace NetProductivity.Controllers
         [HttpPut]
         public IActionResult UpdateTask(TaskP task)
         {
-            var current = db.Tasks.FirstOrDefault(p => p.Id == task.Id);
+            var current = db.Tasks.FirstOrDefault(p => p.Id == CurrentTaskId);
             current.Name = task.Name;
             current.EndDate = task.EndDate;
             current.Priority = task.Priority;
@@ -142,9 +143,9 @@ namespace NetProductivity.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteTask(Guid id)
+        public IActionResult DeleteTask()
         {
-            var current = db.Tasks.FirstOrDefault(t => t.Id == id);
+            var current = db.Tasks.FirstOrDefault(t => t.Id == CurrentTaskId);
             db.Tasks.Remove(current);
             db.SaveChanges();
             return RedirectToAction("Main", "Productivity");

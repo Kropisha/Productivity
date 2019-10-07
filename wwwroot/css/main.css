@@ -193,7 +193,6 @@ h2 {
                 left: 0;
                 top: 0;
                 border-radius: 2px;
-                border: 2px solid #fa9e9a;
                 transition: border-color ease 0.28s;
             }
 
@@ -330,11 +329,14 @@ h2 {
         background-image: linear-gradient(45deg,#87CEFA 0%, #f75851 100%);
         z-index: 1;
     }
-
-        .task-list.current ul li {
-            border-top: 1px solid #f86f69;
-        }
-
+    .btn {
+        align-self: right;
+        margin-right: 10px;
+    }
+    #second {
+        color: #000000;
+        height: 3px;
+    }
         .task-list.current:after {
             content: '';
             position: absolute;
@@ -355,9 +357,7 @@ h2 {
         background-image: linear-gradient(45deg,#262626 0%, #666666 100%);
     }
 
-        .task-list.notcurrent ul li {
-            border-top: 1px solid #34363a;
-        }
+       
 
         .task-list.notcurrent ul, .task-list.notcurrent mark {
             color: #71757d;
@@ -526,12 +526,6 @@ section {
 }
 span {
     font-size: 2em;
-}
-.button1 {
-    margin-right: 10px;
-}
-.button2 {
-    margin-right: 30px;
 }
 td {
     width: 200px;

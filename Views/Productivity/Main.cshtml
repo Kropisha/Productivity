@@ -7,10 +7,6 @@
     <link href="~/css/main.css" rel="stylesheet" type="text/css" />
 }
 
-@*<head>
-    <script src="~/js/main.js" type="text/javascript"></script>
-</head>*@
-
 <main>
     <header>
         <span><i class="fa fa-arrow-left"></i><span class="sr-only">Back</span></span>
@@ -19,113 +15,67 @@
             <span><i class="fa fa-check"></i>@Model.Keys.Count</span>
         </div>
     </header>
+    <input  type="button" class="btn btn-default btn-outline-dark" value="Add project" onclick="window.location.href='@Url.Action("СreateProject", "Productivity")'"/>
     @if (Model.Keys.Count != 0)
     {
-        <section class="task-list current">
-            @foreach (var task in Model)
-            {
-            <tr>
-                <th>
-                <td>
+ <section class="task-list current">
+    @foreach (var task in Model)
+    {
+        <ul>
+            <li>
+                <div>
                     <span>@task.Key</span>
-                </td>
-                <td id="button1">
-                    <a class="btn btn-default btn-outline-dark" asp-controller="Productivity" asp-action="UpdateProject" formaction="Productivity/UpdateProject">Edit</a>
-                </td>
-                <td id="button2">
-                    <a class="btn btn-default btn-outline-dark" asp-controller="Productivity" asp-action="DeleteProject" asp-route-name="@task.Key">Delete</a>
-                </td>
-                </th>
-                <ul>
-                    @if (task.Value.Count != 0)
-                    {
-                        foreach (var proj in task.Value)
-                        {
-                            <li>
+                    <a asp-controller="Productivity" asp-action="UpdateProject">Edit</a>
+                    <a asp-controller="Productivity" asp-action="DeleteProject" asp-route-name="@task.Key">Delete</a>
+                    <input type="button" class="btn btn-default btn-outline-dark" value="Add task" onclick="window.location.href='@Url.Action("СreateTask", "Productivity")'" />
+                </div>
+            </li>
+        </ul>
+        <hr/>
+       // <tr>
+        <ul>
+            @if (task.Value.Count != 0)
+            {
+                foreach (var proj in task.Value)
+                {
+                    <li>
 
-                                <div class="checkbox">
-                                    <div class="check">
-                                        <input type="checkbox" name="task_00">
-                                        <div class="ripple-container">
-                                            <div class="check-off"></div>
-                                            <div class="check-on"><i class="fa fa-check"></i></div>
-                                            <div class="check-ripple"></div>
-                                        </div>
-                                    </div>
-                                    <div class="label">
-                                        <mark>@proj.Name</mark>
-                                        <br>
-                                        <time datetime="05-12-2016">@proj.EndDate</time>
-                                    </div>
+                        <div class="checkbox">
+                            <div class="check">
+                                <input type="checkbox" name="task_00">
+                                <div class="ripple-container">
+                                    <div class="check-off"></div>
+                                    <div class="check-on"><i class="fa fa-check"></i></div>
+                                    <div class="check-ripple"></div>
                                 </div>
-                                <span class="task-msg">Well done!</span>
-                            </li>
-                        }
-                    }
-                    else
-                    {
-                        ProductivityController.CurrentProj = task.Key;
-                        <div class="content2">NO TASKS? <a asp-controller="Productivity" asp-action="СreateTask">CREATE ONE</a></div>
-                    }
+                            </div>
 
-                    @*<li>
-                <div class="checkbox">
-                    <div class="check">
-                        <input type="checkbox" name="task_00">
-                        <div class="ripple-container">
-                            <div class="check-off"></div>
-                            <div class="check-on"><i class="fa fa-check"></i></div>
-                            <div class="check-ripple"></div>
+                            <div class="label">
+                                <mark>@proj.Name</mark>
+                                <br>
+                                <time datetime="05-12-2016">@proj.EndDate</time>
+                            </div>
                         </div>
-                    </div>
-                    <div class="label">
-                        <mark>Cool task</mark>
-                        <br>
-                        <time datetime="05-12-2016">12 March 2016 - h 9:30 am</time>
-                    </div>
-                </div>
-                <span class="task-msg">Well done!</span>
-            </li>
-            <li>
-                <div class="checkbox">
-                    <div class="check">
-                        <input type="checkbox" name="task_01">
-                        <div class="ripple-container">
-                            <div class="check-off"></div>
-                            <div class="check-on"><i class="fa fa-check"></i></div>
-                            <div class="check-ripple"></div>
+                        <div>
+                            <a asp-controller="Productivity" asp-action="UpdateTask">Edit</a>
+
+                            <a asp-controller="Productivity" asp-action="DeleteTask">Delete</a>
                         </div>
-                    </div>
-                    <div class="label">
-                        <mark>Another task which takes more than one line</mark>
-                        <br>
-                        <time datetime="05-12-2016">12 March 2016</time>
-                    </div>
-                </div>
-                <span class="task-msg">Well done!</span>
-            </li>
-            <li>
-                <div class="checkbox">
-                    <div class="check">
-                        <input type="checkbox" name="task_02">
-                        <div class="ripple-container">
-                            <div class="check-off"></div>
-                            <div class="check-on"><i class="fa fa-check"></i></div>
-                            <div class="check-ripple"></div>
-                        </div>
-                    </div>
-                    <div class="label">
-                        <mark>Cool task</mark>
-                        <br>
-                        <time datetime="05-12-2016">12 March 2016</time>
-                    </div>
-                </div>
-                <span class="task-msg">Well done!</span>
-            </li>*@
-                </ul>
-            </tr>
+                        <span class="task-msg">Well done!</span>
+                    </li>
+                    ProductivityController.CurrentTaskId = proj.Id;
+                }
             }
-        </section>
+            else
+            {
+                ProductivityController.CurrentProj = task.Key;
+                <div class="content2">NO TASKS? <a asp-controller="Productivity" asp-action="СreateTask">CREATE ONE</a></div>
+            }
+        </ul>
+        <br/>
+        <hr id="second"/>
+    }
+</section>
 
         <section class="task-list notcurrent">
             <h3>Do it later</h3>
@@ -189,7 +139,7 @@
     }
     else
     {
-        <div class="content">NO ITEMS? <a asp-controller="Productivity" asp-action="СreateProject">CREATE ONE</a></div> //!!!!!!!!!!!!!!!!!
+        <div class="content">NO ITEMS? <a asp-controller="Productivity" asp-action="СreateProject">CREATE ONE</a></div> 
 
         <section class="one">
             <div class="wrapper"></div>

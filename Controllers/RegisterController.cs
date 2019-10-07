@@ -95,7 +95,7 @@ namespace NetProductivity.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Login", "Register");
+                        return RedirectToAction("Main", "Productivity");
                     }
                 }
                 else
