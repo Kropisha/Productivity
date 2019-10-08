@@ -1,7 +1,7 @@
 ﻿(function($) {
 
 	/* Select the checkbox */
-	var checkList = $('.check'),
+	var checkList = document.getElementsByClassName('.check'),
 		toDoCheck = checkList.children('input[type="checkbox"]');
 
 	/* Check out whether checkbox is checked, and add 'task-checked' class to

@@ -11,9 +11,13 @@ namespace NetProductivity.Models
         public DbSet<Login> Login { get; set; }
         public DbSet<UserProjects> UserProjects { get; set; }
 
+
         public ProductivityContext(DbContextOptions<ProductivityContext> options) :base(options)
         {
             Database.EnsureCreated();
+        }
+        public ProductivityContext()
+        {
         }
     }
 }

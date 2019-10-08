@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -7,6 +8,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NetProductivity.Helpers;
 using NetProductivity.Models;
 
 namespace NetProductivity.Controllers
@@ -14,7 +16,7 @@ namespace NetProductivity.Controllers
 
     public class ProductivityController : Controller
     {
-        private ProductivityContext db;
+        private static ProductivityContext db;
 
         public ProductivityController(ProductivityContext context)
         {
@@ -142,7 +144,7 @@ namespace NetProductivity.Controllers
             return RedirectToAction("Main", "Productivity");
         }
 
-        [HttpDelete]
+        [HttpGet]
         public IActionResult DeleteTask()
         {
             var current = db.Tasks.FirstOrDefault(t => t.Id == CurrentTaskId);
@@ -182,6 +184,8 @@ namespace NetProductivity.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
+                Load();
+
                 List<Guid> projectsId = new List<Guid>();
                 foreach (var proj in db.UserProjects)
                 {
@@ -199,16 +203,14 @@ namespace NetProductivity.Controllers
                         projects.Add(res);
                     }
                 }
-
+                DictComparer<TaskP> comparer = new DictComparer<TaskP>();
                 Dictionary<string, List<TaskP>> tasks = new Dictionary<string, List<TaskP>>();
                 foreach (var project in projects)
                 {
                     var projectTasks = db.Tasks.Where(id => id.ProjectId == project.Id).ToList();
-
+                    projectTasks.Sort(comparer);
                     tasks.Add(project.Name, projectTasks);
                 }
-
-                //ViewBag.Info = general;
 
                 return View(tasks);
             }
@@ -216,6 +218,35 @@ namespace NetProductivity.Controllers
             {
                 return RedirectToAction("Login", "Register");
             }
+        }
+
+        public static bool IsActive(string name)
+        {
+            var proj = db.Projects.FirstOrDefault(p => p.Name == name);
+            var current = db.UserProjects.FirstOrDefault(p => p.ProjectId == proj.Id);
+            if (current.Status == Status.Done.ToString())
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        private void Load()
+        {
+            foreach (var proj in db.Projects)
+            {
+                var projectTasks = db.Tasks.Where(id => id.ProjectId == proj.Id).ToList();
+                var res = projectTasks.Find(t => t.EndDate > DateTime.Today);
+                if (res == null)
+                {
+                    var current = db.UserProjects.FirstOrDefault(p => p.ProjectId == proj.Id);
+                    current.Status = Status.Done.ToString();
+                    //db.SaveChanges();
+                }
+            }
+            db.SaveChanges();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

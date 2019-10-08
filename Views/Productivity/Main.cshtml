@@ -21,18 +21,20 @@
  <section class="task-list current">
     @foreach (var task in Model)
     {
+        if (ProductivityController.IsActive(task.Key)) { 
         <ul>
             <li>
                 <div>
                     <span>@task.Key</span>
                     <a asp-controller="Productivity" asp-action="UpdateProject">Edit</a>
                     <a asp-controller="Productivity" asp-action="DeleteProject" asp-route-name="@task.Key">Delete</a>
-                    <input type="button" class="btn btn-default btn-outline-dark" value="Add task" onclick="window.location.href='@Url.Action("СreateTask", "Productivity")'" />
+
+                    <input type="button" class="btn2 btn-default btn-outline-dark" value="Add task" onclick="window.location.href='@Url.Action("СreateTask", "Productivity")'" />
                 </div>
-            </li>
+            </li>        
         </ul>
+        ProductivityController.CurrentProj = task.Key;
         <hr/>
-       // <tr>
         <ul>
             @if (task.Value.Count != 0)
             {
@@ -73,69 +75,131 @@
             }
         </ul>
         <br/>
-        <hr id="second"/>
+            <hr id="second"/>
+         }
     }
 </section>
 
-        <section class="task-list notcurrent">
-            <h3>Do it later</h3>
-            <ul>
-                <li>
-                    <div class="checkbox">
-                        <div class="check">
-                            <input type="checkbox" name="task_03">
-                            <div class="ripple-container">
-                                <div class="check-off"></div>
-                                <div class="check-on"><i class="fa fa-check"></i></div>
-                                <div class="check-ripple"></div>
-                            </div>
-                        </div>
-                        <div class="label">
-                            <mark>Cool task</mark>
-                            <br>
-                            <time datetime="05-12-2016">12 March 2016</time>
-                        </div>
-                    </div>
-                    <span class="task-msg">Well done!</span>
-                </li>
-                <li>
-                    <div class="checkbox">
-                        <div class="check">
-                            <input type="checkbox" name="task_03">
-                            <div class="ripple-container">
-                                <div class="check-off"></div>
-                                <div class="check-on"><i class="fa fa-check"></i></div>
-                                <div class="check-ripple"></div>
-                            </div>
-                        </div>
-                        <div class="label">
-                            <mark>Cool task</mark>
-                            <br>
-                            <time datetime="05-12-2016">12 March 2016</time>
-                        </div>
-                    </div>
-                    <span class="task-msg">Well done!</span>
-                </li>
-                <li>
-                    <div class="checkbox">
-                        <div class="check">
-                            <input type="checkbox" name="task_04">
-                            <div class="ripple-container">
-                                <div class="check-off"></div>
-                                <div class="check-on"><i class="fa fa-check"></i></div>
-                                <div class="check-ripple"></div>
-                            </div>
-                        </div>
-                        <div class="label">
-                            <mark>Cool task</mark>
-                            <br>
-                            <time datetime="05-12-2016">12 March 2016</time>
-                        </div>
-                    </div>
-                    <span class="task-msg">Well done!</span>
-                </li>
-            </ul>
-        </section>
+ <section class="task-list notcurrent">
+     @foreach (var task in Model)
+     {
+         if (!ProductivityController.IsActive(task.Key))
+         {
+             <ul>
+                 <li>
+                     <div>
+                         <span>@task.Key</span>
+                         <a asp-controller="Productivity" asp-action="UpdateProject">Edit</a>
+                         <a asp-controller="Productivity" asp-action="DeleteProject" asp-route-name="@task.Key">Delete</a>
+
+                         <input type="button" class="btn2 btn-default btn-outline-dark" value="Add task" onclick="window.location.href='@Url.Action("СreateTask", "Productivity")'" />
+                     </div>
+                 </li>
+             </ul>
+             ProductivityController.CurrentProj = task.Key;
+             <hr />
+             <ul>
+                 @if (task.Value.Count != 0)
+                 {
+                     foreach (var proj in task.Value)
+                     {
+                         <li>
+
+                             <div class="checkbox">
+                                 <div class="check">
+                                     <input type="checkbox" name="task_00">
+                                     <div class="ripple-container">
+                                         <div class="check-off"></div>
+                                         <div class="check-on"><i class="fa fa-check"></i></div>
+                                         <div class="check-ripple"></div>
+                                     </div>
+                                 </div>
+
+                                 <div class="label">
+                                     <mark>@proj.Name</mark>
+                                     <br>
+                                     <time datetime="05-12-2016">@proj.EndDate</time>
+                                 </div>
+                             </div>
+                             <div>
+                                 <a asp-controller="Productivity" asp-action="UpdateTask">Edit</a>
+
+                                 <a asp-controller="Productivity" asp-action="DeleteTask">Delete</a>
+                             </div>
+                             <span class="task-msg">Well done!</span>
+                         </li>
+                         ProductivityController.CurrentTaskId = proj.Id;
+                     }
+                 }
+                 else
+                 {
+                     ProductivityController.CurrentProj = task.Key;
+                     <div class="content2">NO TASKS? <a asp-controller="Productivity" asp-action="СreateTask">CREATE ONE</a></div>
+                 }
+             </ul>
+             <br />
+             <hr id="second" />
+         }
+     }
+     
+     @*<h3>Do it later</h3>
+     <ul>
+         <li>
+             <div class="checkbox">
+                 <div class="check">
+                     <input type="checkbox" name="task_03">
+                     <div class="ripple-container">
+                         <div class="check-off"></div>
+                         <div class="check-on"><i class="fa fa-check"></i></div>
+                         <div class="check-ripple"></div>
+                     </div>
+                 </div>
+                 <div class="label">
+                     <mark>Cool task</mark>
+                     <br>
+                     <time datetime="05-12-2016">12 March 2016</time>
+                 </div>
+             </div>
+             <span class="task-msg">Well done!</span>
+         </li>
+         <li>
+             <div class="checkbox">
+                 <div class="check">
+                     <input type="checkbox" name="task_03">
+                     <div class="ripple-container">
+                         <div class="check-off"></div>
+                         <div class="check-on"><i class="fa fa-check"></i></div>
+                         <div class="check-ripple"></div>
+                     </div>
+                 </div>
+                 <div class="label">
+                     <mark>Cool task</mark>
+                     <br>
+                     <time datetime="05-12-2016">12 March 2016</time>
+                 </div>
+             </div>
+             <span class="task-msg">Well done!</span>
+         </li>
+         <li>
+             <div class="checkbox">
+                 <div class="check">
+                     <input type="checkbox" name="task_04">
+                     <div class="ripple-container">
+                         <div class="check-off"></div>
+                         <div class="check-on"><i class="fa fa-check"></i></div>
+                         <div class="check-ripple"></div>
+                     </div>
+                 </div>
+                 <div class="label">
+                     <mark>Cool task</mark>
+                     <br>
+                     <time datetime="05-12-2016">12 March 2016</time>
+                 </div>
+             </div>
+             <span class="task-msg">Well done!</span>
+         </li>
+     </ul>*@
+ </section>
     }
     else
     {
