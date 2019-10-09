@@ -21,13 +21,15 @@
  <section class="task-list current">
     @foreach (var task in Model)
     {
-        if (ProductivityController.IsActive(task.Key)) { 
+        if (ProductivityController.IsActive(task.Key)) {
         <ul>
             <li>
                 <div>
                     <span>@task.Key</span>
-                    <a asp-controller="Productivity" asp-action="UpdateProject">Edit</a>
-                    <a asp-controller="Productivity" asp-action="DeleteProject" asp-route-name="@task.Key">Delete</a>
+                    @{var key = task.Key; }
+
+                    <a asp-controller="Productivity" asp-action="UpdateProject" asp-route-name="@key">Edit</a>
+                    <a asp-controller="Productivity" asp-action="DeleteProject" asp-route-name="@key">Delete</a>
 
                     <input type="button" class="btn2 btn-default btn-outline-dark" value="Add task" onclick="window.location.href='@Url.Action("СreateTask", "Productivity")'" />
                 </div>
@@ -59,9 +61,12 @@
                             </div>
                         </div>
                         <div>
-                            <a asp-controller="Productivity" asp-action="UpdateTask">Edit</a>
-
-                            <a asp-controller="Productivity" asp-action="DeleteTask">Delete</a>
+                            @{
+                                var taskId = proj.Id;
+                            }
+                            <a asp-controller="Productivity" asp-action="UpdateTask" asp-route-name="@taskId">Edit</a>
+                            @Html.ActionLink("Delete", "DeleteTask", "Productivity", @taskId)
+                            @*<a asp-controller="Productivity" asp-action="DeleteTask" asp-route-name="@taskId">Delete</a>*@
                         </div>
                         <span class="task-msg">Well done!</span>
                     </li>
@@ -89,8 +94,9 @@
                  <li>
                      <div>
                          <span>@task.Key</span>
-                         <a asp-controller="Productivity" asp-action="UpdateProject">Edit</a>
-                         <a asp-controller="Productivity" asp-action="DeleteProject" asp-route-name="@task.Key">Delete</a>
+                         @{var key = task.Key; }
+                         <a asp-controller="Productivity" asp-action="UpdateProject" asp-route-name="@key">Edit</a>
+                         <a asp-controller="Productivity" asp-action="DeleteProject" asp-route-name="@key">Delete</a>
 
                          <input type="button" class="btn2 btn-default btn-outline-dark" value="Add task" onclick="window.location.href='@Url.Action("СreateTask", "Productivity")'" />
                      </div>
@@ -122,9 +128,13 @@
                                  </div>
                              </div>
                              <div>
-                                 <a asp-controller="Productivity" asp-action="UpdateTask">Edit</a>
+                                 @{
+                                     var taskId = proj.Id;
+                                 }
 
-                                 <a asp-controller="Productivity" asp-action="DeleteTask">Delete</a>
+                                 <a asp-controller="Productivity" asp-action="UpdateTask" asp-route-name="@taskId">Edit</a>
+
+                                 <a asp-controller="Productivity" asp-action="DeleteTask" asp-route-name="@taskId">Delete</a>
                              </div>
                              <span class="task-msg">Well done!</span>
                          </li>
@@ -142,63 +152,6 @@
          }
      }
      
-     @*<h3>Do it later</h3>
-     <ul>
-         <li>
-             <div class="checkbox">
-                 <div class="check">
-                     <input type="checkbox" name="task_03">
-                     <div class="ripple-container">
-                         <div class="check-off"></div>
-                         <div class="check-on"><i class="fa fa-check"></i></div>
-                         <div class="check-ripple"></div>
-                     </div>
-                 </div>
-                 <div class="label">
-                     <mark>Cool task</mark>
-                     <br>
-                     <time datetime="05-12-2016">12 March 2016</time>
-                 </div>
-             </div>
-             <span class="task-msg">Well done!</span>
-         </li>
-         <li>
-             <div class="checkbox">
-                 <div class="check">
-                     <input type="checkbox" name="task_03">
-                     <div class="ripple-container">
-                         <div class="check-off"></div>
-                         <div class="check-on"><i class="fa fa-check"></i></div>
-                         <div class="check-ripple"></div>
-                     </div>
-                 </div>
-                 <div class="label">
-                     <mark>Cool task</mark>
-                     <br>
-                     <time datetime="05-12-2016">12 March 2016</time>
-                 </div>
-             </div>
-             <span class="task-msg">Well done!</span>
-         </li>
-         <li>
-             <div class="checkbox">
-                 <div class="check">
-                     <input type="checkbox" name="task_04">
-                     <div class="ripple-container">
-                         <div class="check-off"></div>
-                         <div class="check-on"><i class="fa fa-check"></i></div>
-                         <div class="check-ripple"></div>
-                     </div>
-                 </div>
-                 <div class="label">
-                     <mark>Cool task</mark>
-                     <br>
-                     <time datetime="05-12-2016">12 March 2016</time>
-                 </div>
-             </div>
-             <span class="task-msg">Well done!</span>
-         </li>
-     </ul>*@
  </section>
     }
     else
@@ -242,5 +195,5 @@
             });
         });
 
-    })(jQuery);
+    });
 </script>

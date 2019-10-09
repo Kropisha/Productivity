@@ -52,13 +52,15 @@ namespace NetProductivity.Controllers
                 return BadRequest();
             }
 
+            var id = Guid.NewGuid();
+            project.Id = id;
             db.Projects.Add(project);
             var user = User.Identity.GetUserId();
             db.UserProjects.Add(
                 new UserProjects
                 {
-                    UserId = User.Identity.GetUserId(), 
-                    ProjectId = project.Id,
+                    UserId = user, 
+                    ProjectId = id,
                     Status = Status.New.ToString()
                 });
             db.SaveChanges();
@@ -110,50 +112,71 @@ namespace NetProductivity.Controllers
             return RedirectToAction("Main", "Productivity");
         }
 
-        [HttpGet]
-        public IActionResult UpdateProject()
+        [HttpGet("/UpdateProject/{name}")]
+        public IActionResult UpdateProject(string name)
         {
+            CurrentProj = name;
             return View();
         }
 
-        [HttpPut]
-        public IActionResult UpdateProject(Project project)
+        [HttpPost]
+        public IActionResult UpdateProjects(Project project)
         {
-            var current = db.Projects.FirstOrDefault(p => p.Id == project.Id);
+            var current = db.Projects.FirstOrDefault(p => p.Name == CurrentProj);
             current.Name = project.Name;
             db.Projects.Update(current);
             db.SaveChanges();
             return RedirectToAction("Main", "Productivity");
         }
 
-        [HttpGet]
-        public IActionResult UpdateTask()
+        [HttpGet("/UpdateTask/{name}")]
+        public IActionResult UpdateTask(Guid name)
         {
-            return View("СreateTask");
+            CurrentTaskId = name;
+            return View();
         }
 
-        [HttpPut]
-        public IActionResult UpdateTask(TaskP task)
+        [HttpPost]
+        public IActionResult UpdateTask(TaskViewModel task)
         {
             var current = db.Tasks.FirstOrDefault(p => p.Id == CurrentTaskId);
-            current.Name = task.Name;
+            if (task.Name != null)
+            {
+                current.Name = task.Name;
+            }
+            int prior = 0;
+            if (task.Priority == "Hight")
+            {
+                prior = 1;
+            }
+            else if (task.Priority == "Medium")
+            {
+                prior = 2;
+            }
+            else
+            {
+                prior = 3;
+            }
             current.EndDate = task.EndDate;
-            current.Priority = task.Priority;
+            current.Priority = prior;
             db.Tasks.Update(current);
+            var currentP = db.UserProjects.FirstOrDefault(p => p.ProjectId == current.ProjectId);
+            currentP.Status = Status.Active.ToString();
+            db.UserProjects.Update(currentP);
             db.SaveChanges();
             return RedirectToAction("Main", "Productivity");
         }
 
-        [HttpGet]
-        public IActionResult DeleteTask()
+        [HttpGet("/DeleteTask/{id}")]
+        public IActionResult DeleteTask(Guid id)
         {
-            var current = db.Tasks.FirstOrDefault(t => t.Id == CurrentTaskId);
+            var current = db.Tasks.FirstOrDefault(t => t.Id == id);
             db.Tasks.Remove(current);
             db.SaveChanges();
             return RedirectToAction("Main", "Productivity");
         }
 
-        [HttpDelete]
+        [HttpGet("/DeleteProject/{name}")]
         public IActionResult DeleteProject(string name)
         {
             var current = db.Projects.FirstOrDefault(t => t.Name == name);
@@ -205,10 +228,17 @@ namespace NetProductivity.Controllers
                 }
                 DictComparer<TaskP> comparer = new DictComparer<TaskP>();
                 Dictionary<string, List<TaskP>> tasks = new Dictionary<string, List<TaskP>>();
+                Random rand = new Random();
                 foreach (var project in projects)
                 {
                     var projectTasks = db.Tasks.Where(id => id.ProjectId == project.Id).ToList();
                     projectTasks.Sort(comparer);
+                    if (tasks.Keys.Contains(project.Name))
+                    {
+                        project.Name = project.Name + rand.Next(1, 100);
+                        db.Projects.Update(project);
+                        db.SaveChanges();
+                    }
                     tasks.Add(project.Name, projectTasks);
                 }
 

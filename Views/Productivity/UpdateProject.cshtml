@@ -1,15 +1,11 @@
 ﻿@model NetProductivity.Models.Project
 
 @{
-    ViewBag.Title = "title";
     Layout = "_Layout";
     <link href="~/css/register-page.css" rel="stylesheet" type="text/css" />
 }
 
-@*<head>
-        <script src="~/js/register.js" type="text/javascript"></script>
-    </head>*@
-<form asp-controller="Productivity" asp-action="UpdateProject" method="post">
+<form asp-controller="Productivity" asp-action="UpdateProjects" method="post">
     <h2>Create project</h2>
     <div>
         <p>
