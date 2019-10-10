@@ -67,14 +67,21 @@ namespace NetProductivity.Controllers
             return RedirectToAction("Main", "Productivity");
         }
 
-        [HttpGet]
-        public IActionResult СreateTask()
+        [HttpGet("/СreateTask/{name}")]
+        public IActionResult СreateTask(string name)
         {
+            CurrentProj = name;
             return View();
         }
 
+        //[HttpGet]
+        //public IActionResult СreateTask()
+        //{
+        //    return View();
+        //}
+
         [HttpPost]
-        public IActionResult СreateTask(TaskViewModel current)
+        public IActionResult СreateTasks([FromForm]TaskViewModel current)
         {
             if (current == null)
             {
@@ -106,7 +113,7 @@ namespace NetProductivity.Controllers
                 EndDate = current.EndDate
             };
 
-            task.Status = Status.New.ToString();
+            //task.Status = Status.New.ToString();
             db.Tasks.Add(task);
             db.SaveChanges();
             return RedirectToAction("Main", "Productivity");

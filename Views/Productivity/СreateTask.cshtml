@@ -1,12 +1,11 @@
 ﻿@model TaskP
 
 @{
-    ViewBag.Title = "title";
     Layout = "_Layout";
     <link href="~/css/register-page.css" rel="stylesheet" type="text/css" />
 }
 
-<form asp-controller="Productivity" asp-action="СreateTask" method="post">
+<form action="../Productivity/CreateTasks" method="post">
     <h2>Create task</h2>
     <div>
         <p>
@@ -33,7 +32,7 @@
     </div>
     <div>
         <p>
-            <input type="submit" value="Create Task" id="submit" />
+            <input type="submit" value="Create Task" id="submit" formmethod="post" />
         </p>
     </div>
 </form>

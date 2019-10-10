@@ -65,8 +65,8 @@
                                 var taskId = proj.Id;
                             }
                             <a asp-controller="Productivity" asp-action="UpdateTask" asp-route-name="@taskId">Edit</a>
-                            @Html.ActionLink("Delete", "DeleteTask", "Productivity", @taskId)
-                            @*<a asp-controller="Productivity" asp-action="DeleteTask" asp-route-name="@taskId">Delete</a>*@
+                         @*  <a href="<%= Url.Action("Productivity","DeleteTask", @taskId) %>"></a>*@
+                            @**@<a asp-controller="Productivity" asp-action="DeleteTask" asp-route-name="@taskId">Delete</a>
                         </div>
                         <span class="task-msg">Well done!</span>
                     </li>
@@ -75,8 +75,7 @@
             }
             else
             {
-                ProductivityController.CurrentProj = task.Key;
-                <div class="content2">NO TASKS? <a asp-controller="Productivity" asp-action="СreateTask">CREATE ONE</a></div>
+                <div class="content2">NO TASKS? <a asp-controller="Productivity" asp-action="СreateTask" asp-route-name="@task.Key">CREATE ONE</a></div>
             }
         </ul>
         <br/>
@@ -133,8 +132,7 @@
                                  }
 
                                  <a asp-controller="Productivity" asp-action="UpdateTask" asp-route-name="@taskId">Edit</a>
-
-                                 <a asp-controller="Productivity" asp-action="DeleteTask" asp-route-name="@taskId">Delete</a>
+                                 <a href="/DeleteTask/@taskId">Delete</a>
                              </div>
                              <span class="task-msg">Well done!</span>
                          </li>
@@ -143,8 +141,7 @@
                  }
                  else
                  {
-                     ProductivityController.CurrentProj = task.Key;
-                     <div class="content2">NO TASKS? <a asp-controller="Productivity" asp-action="СreateTask">CREATE ONE</a></div>
+                     <div class="content2">NO TASKS? <a asp-controller="Productivity" asp-action="СreateTask" asp-route-name="@task.Key">CREATE ONE</a></div>
                  }
              </ul>
              <br />

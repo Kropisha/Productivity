@@ -1,6 +1,7 @@
 ﻿body {
     background-color: #FFF;
     font-family: "Open Sans", sans-serif;
+    line-height:1;
 }
 
     html *, body * {
@@ -15,6 +16,7 @@ main {
     background-color: #665252;
     position: relative;
     z-index: 0;
+    height: auto;
 }
 
     main header {
@@ -88,7 +90,7 @@ h2 {
     text-align: justify;
     direction: rtl;
     position: relative;
-    line-height: 0;
+    /*line-height: 0;*/
 }
 
     .checkbox:after {
@@ -111,7 +113,6 @@ h2 {
     }
 
     .checkbox input[type="checkbox"] {
-        opacity: 0;
         width: 100%;
         height: 100%;
         position: absolute;
@@ -347,7 +348,7 @@ h2 {
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.1;
+            opacity: 0.2;
             z-index: 0;
             background-image: url("https://snap-photos.s3.amazonaws.com/img-thumbs/960w/XNZTUL720T.jpg");
             background-repeat: no-repeat;
