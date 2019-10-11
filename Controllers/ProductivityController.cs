@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NetProductivity.Helpers;
 using NetProductivity.Models;
@@ -43,6 +40,7 @@ namespace NetProductivity.Controllers
 
         public static string CurrentProj { get; set; }
         public static Guid CurrentTaskId { get; set; }
+        private static List<Project> projects { get; set; }
 
         [HttpPost]
         public IActionResult СreateProject(Project project)
@@ -72,51 +70,6 @@ namespace NetProductivity.Controllers
         {
             CurrentProj = name;
             return View();
-        }
-
-        //[HttpGet]
-        //public IActionResult СreateTask()
-        //{
-        //    return View();
-        //}
-
-        [HttpPost]
-        public IActionResult СreateTasks([FromForm]TaskViewModel current)
-        {
-            if (current == null)
-            {
-                return BadRequest();
-            }
-
-            int prior = 0;
-            if (current.Priority=="Hight")
-            {
-                prior = 1;
-            }
-            else if(current.Priority=="Medium")
-            {
-                prior = 2;
-            }
-            else
-            {
-                prior = 3;
-            }
-
-            var id = db.Projects.Where(p => p.Name == CurrentProj).FirstOrDefault();
-            TaskP task = new TaskP
-            {
-                Id = Guid.NewGuid(),
-                Name = current.Name,
-                ProjectId = id.Id,
-                Priority = prior,
-                Status = Status.New.ToString(),
-                EndDate = current.EndDate
-            };
-
-            //task.Status = Status.New.ToString();
-            db.Tasks.Add(task);
-            db.SaveChanges();
-            return RedirectToAction("Main", "Productivity");
         }
 
         [HttpGet("/UpdateProject/{name}")]
@@ -216,23 +169,7 @@ namespace NetProductivity.Controllers
             {
                 Load();
 
-                List<Guid> projectsId = new List<Guid>();
-                foreach (var proj in db.UserProjects)
-                {
-                    if (proj.UserId == User.Identity.GetUserId())
-                    {
-                        projectsId.Add(proj.ProjectId);
-                    }
-                }
-
-                List<Project> projects = new List<Project>();
-                foreach (var res in db.Projects)
-                {
-                    if (projectsId.Contains(res.Id))
-                    {
-                        projects.Add(res);
-                    }
-                }
+                projects = GetProjects();
                 DictComparer<TaskP> comparer = new DictComparer<TaskP>();
                 Dictionary<string, List<TaskP>> tasks = new Dictionary<string, List<TaskP>>();
                 Random rand = new Random();
@@ -259,7 +196,14 @@ namespace NetProductivity.Controllers
 
         public static bool IsActive(string name)
         {
-            var proj = db.Projects.FirstOrDefault(p => p.Name == name);
+            Project proj = null;
+            foreach (var projs in projects)
+            {
+                if (projs.Name == name)
+                {
+                    proj = projs;
+                }
+            }
             var current = db.UserProjects.FirstOrDefault(p => p.ProjectId == proj.Id);
             if (current.Status == Status.Done.ToString())
             {
@@ -290,6 +234,78 @@ namespace NetProductivity.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpPost]
+        public IActionResult CreateTasks(TaskViewModel current)
+        {
+            if (current == null)
+            {
+                return BadRequest();
+            }
+
+            int prior = 0;
+            if (current.Priority == "Hight")
+            {
+                prior = 1;
+            }
+            else if (current.Priority == "Medium")
+            {
+                prior = 2;
+            }
+            else
+            {
+                prior = 3;
+            }
+
+            var projects = GetProjects();
+            Guid id = Guid.Empty;
+            
+            foreach (var proj in projects)
+            {
+                if (proj.Name == CurrentProj)
+                {
+                    id = proj.Id;
+                }
+            }
+
+            TaskP task = new TaskP
+            {
+                Id = Guid.NewGuid(),
+                Name = current.Name,
+                ProjectId = id,
+                Priority = prior,
+                Status = Status.New.ToString(),
+                EndDate = current.EndDate
+            };
+
+            //task.Status = Status.New.ToString();
+            db.Tasks.Add(task);
+            db.SaveChanges();
+            return RedirectToAction("Main", "Productivity");
+        }
+
+        private List<Project> GetProjects()
+        {
+            List<Guid> projectsId = new List<Guid>();
+            foreach (var proj in db.UserProjects)
+            {
+                if (proj.UserId ==User.Identity.GetUserId())
+                {
+                    projectsId.Add(proj.ProjectId);
+                }
+            }
+
+            List<Project> projects = new List<Project>();
+            foreach (var res in db.Projects)
+            {
+                if (projectsId.Contains(res.Id))
+                {
+                    projects.Add(res);
+                }
+            }
+
+            return projects;
         }
     }
 }

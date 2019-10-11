@@ -5,7 +5,7 @@
     <link href="~/css/register-page.css" rel="stylesheet" type="text/css" />
 }
 
-<form action="../Productivity/CreateTasks" method="post">
+<form asp-action="CreateTasks" method="post">
     <h2>Create task</h2>
     <div>
         <p>
@@ -32,7 +32,7 @@
     </div>
     <div>
         <p>
-            <input type="submit" value="Create Task" id="submit" formmethod="post" />
+            <input type="submit" value="Create Task" id="submit"/>
         </p>
     </div>
 </form>
